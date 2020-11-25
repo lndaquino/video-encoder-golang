@@ -5,11 +5,12 @@ import (
 	"encoder/domain"
 	"encoder/framework/queue"
 	"encoding/json"
-	"github.com/jinzhu/gorm"
-	"github.com/streadway/amqp"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/jinzhu/gorm"
+	"github.com/streadway/amqp"
 )
 
 type JobManager struct {
@@ -17,7 +18,7 @@ type JobManager struct {
 	Domain           domain.Job
 	MessageChannel   chan amqp.Delivery
 	JobReturnChannel chan JobWorkerResult
-	RabbitMQ         *queue.RabbitMQ
+	RabbitMQ         *queue.RabbitMQ // dlx type fanout - video-result binding amq.direct routing key jobs - video-failed binding dlx - video created by system
 }
 
 type JobNotificationError struct {
